@@ -11,3 +11,4 @@ Tu repositorio tiene que constar, al menos, de los siguientes archivos/carpetas:
 - Archivo README.md, que recoja los pasos seguidos durante el proyecto y el informe de tú análisis.
 - Un esquema de la BBDD que te proporcionamos.
 - Archivo SQL con las consultas resueltas (Cada consulta debe estar identificada con su número y su enunciado como comentario)
+- Nueva linea
