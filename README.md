@@ -28,11 +28,11 @@ Este proyecto utiliza PostgreSQL como sistema gestor de base de datos y DBeaver 
 
 ## 🗃️ Esquema de la BBDD
 
-![alt text](<sql\Esquema BBDD Pelis.png>)
+![alt text](<sql/Esquema BBDD Pelis.png>)
 
 ## 💻 Consultas SQL
 
-En el archivo [Consultes](Consultes.sql) se encuentra la resolución de todas las consultas planteadas en el [documento](data\EnunciadoDataProject_SQL.Lógica.pdf). 
+En el archivo [Consultes](sql/Consultes.sql) se encuentra la resolución de todas las consultas planteadas en el [documento](data/EnunciadoDataProject_SQL.Lógica.pdf). 
 
 Hemos añadido comentarios en las líneas de código más complejas para facilitar su comprensión, así como las respuestas a algunas de las preguntas planteadas en el enunciado, que también están comentadas dentro del propio código.
 
