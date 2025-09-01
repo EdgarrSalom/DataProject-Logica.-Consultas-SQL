@@ -12,7 +12,7 @@ WHERE "rating" = 'R'; --Filtramos solo las que tienen una clasificación por eda
 y 40.
 */
 
-SELECT "first_name"
+SELECT "first_name", "last_name"
 FROM "actor"
 WHERE "actor_id" BETWEEN 30 AND 40;
 
@@ -24,6 +24,7 @@ SELECT "title"
 FROM "film"
 WHERE "language_id" = "original_language_id";
 -- No obtenemos ninguna porque la columna "original_language_id" contiene todo NULL
+-- Nota: La consulta funciona correctamente pero en la base proporcionada no ofrece coincidencias.
 
 /*
 5. Ordena las películas por duración de forma ascendente.
@@ -40,7 +41,7 @@ apellido.
 
 SELECT "first_name", "last_name"
 FROM "actor"
-WHERE "last_name" = 'ALLEN';
+WHERE "last_name" LIKE '%ALLEN%'; -- -- Usamos LIKE con el comodín % para cubrir apellidos como 'O'Allen' o 'Allenwood'.
 
 /*
 7. Encuentra la cantidad total de películas en cada clasificación de la tabla
@@ -78,10 +79,13 @@ FROM "film";
 11. Encuentra lo que costó el antepenúltimo alquiler ordenado por día.
 */
 
-SELECT "amount"
-FROM "payment"
-ORDER BY "payment_date" DESC
+SELECT r.rental_id, r.rental_date, p.amount AS costo
+FROM rental r
+JOIN payment p 
+ON r.rental_id = p.rental_id
+ORDER BY r.rental_date DESC
 LIMIT 1 OFFSET 2;
+--El aneteoenúltimo alquiler ordenado por día tuvo un coste de 0
 
 /*
 12. Encuentra el título de las películas en la tabla “film” que no sean ni ‘NC17’ ni ‘G’ en cuanto a su clasificación.
@@ -178,8 +182,9 @@ HAVING AVG(f.length) > 110; --Utilizamos HAVING por ser una función de agregaci
 21. ¿Cuál es la media de duración del alquiler de las películas?
  */
 
-SELECT AVG(return_date - rental_date) AS media_dias
+SELECT ROUND(AVG(EXTRACT(day FROM(return_date - rental_date))),2) AS media_dias
 FROM rental;
+-- Utilizamos EXTRACT(day FROM para obtener los dias.
 
 /*
 22. Crea una columna con el nombre y apellidos de todos los actores y
@@ -249,9 +254,14 @@ mostrar la cantidad disponible.
 
 SELECT f.title, COUNT(i.inventory_id) AS cantidad_disponible
 FROM film f
-RIGHT JOIN inventory i --El RIGHT nos asegura que la peli esté en el inventario. Al utilizar LEFT vemos que algunas tienen 0 unidades en inventario
+LEFT JOIN inventory i
 ON f.film_id = i.film_id
-GROUP BY f.title;
+GROUP BY f.title
+ORDER BY f.title; --Ordenamos por título para una mayor legibilidad
+/*
+Si utilizamos un RIGHT JOIN se muestran únicamente las películas que están en inventario por eso utilizamos un LEFT JOIN para no perder
+las películas que nunca han estado en inventario y cumplir con la condición que se pide en la consulta.
+*/
 
 /*
 30. Obtener los actores y el número de películas en las que ha actuado.
